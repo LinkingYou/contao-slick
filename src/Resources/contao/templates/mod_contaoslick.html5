@@ -1,0 +1,72 @@
+<?php
+
+$GLOBALS['TL_CSS'][] = 'bundles/contaoslick/slick-1.6.0/slick/slick.css';
+$GLOBALS['TL_CSS'][] = 'bundles/contaoslick/slick-1.6.0/slick/slick-theme.css';
+$GLOBALS['TL_JAVASCRIPT'][] = 'bundles/contaoslick/slick-1.6.0/slick/slick.js';
+
+?>
+
+
+<?php if ($this->headline): ?>
+    <<?php echo $this->hl; ?>><?php echo $this->headline; ?></<?php echo $this->hl; ?>>
+<?php endif; ?>
+
+<div class="contao-slick" style="display: none;">
+    <?php foreach ($this->images as $image): ?>
+        <div>
+            <?php if (($this->slick->linkImage) && ($image["picture"]["link"])): ?>
+                <a href="<?= $image["picture"]["link"] ?>" target="_blank">
+            <?php endif; ?>
+            <?php echo $this->insert('picture_default', $image["picture"]); ?>
+            <?php if (($this->slick->linkImage) && ($image["picture"]["link"])): ?>
+                </a>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('.contao-slick').slick({
+            dots: <?php echo $this->slick->dots?'true':'false' ?>,
+            infinite: <?php echo $this->slick->infinite?'true':'false' ?>,
+            speed: <?php echo $this->slick->speed ?>,
+            slidesToShow: <?php echo $this->slick->slidesToShow ?>,
+            slidesToScroll: <?php echo $this->slick->slidesToScroll ?>,
+            autoplay: <?php echo $this->slick->autoplay?'true':'false' ?>,
+            autoplaySpeed: <?php echo $this->slick->autoplaySpeed ?>,
+            arrows: <?php echo $this->slick->arrows?'true':'false' ?>,
+            fade: <?php echo $this->slick->fade?'true':'false' ?>,
+            cssEase: 'linear',
+            pauseOnFocus: <?php echo $this->slick->pauseOnFocus?'true':'false' ?>,
+            pauseOnHover: <?php echo $this->slick->pauseOnHover?'true':'false' ?>,
+            pauseOnDotsHover: <?php echo $this->slick->pauseOnDotsHover?'true':'false' ?>,
+            <?php if ($this->responsive_settings): ?>
+            responsive: [
+                <?php foreach ($this->responsive_settings as $responsive_setting): ?>
+                {
+                    breakpoint: <?= $responsive_setting->breakpoint ?>,
+                    settings: {
+                        dots: <?php echo $responsive_setting->dots?'true':'false' ?>,
+                        infinite: <?php echo $responsive_setting->infinite?'true':'false' ?>,
+                        speed: <?php echo $responsive_setting->speed ?>,
+                        slidesToShow: <?php echo $responsive_setting->slidesToShow ?>,
+                        slidesToScroll: <?php echo $responsive_setting->slidesToScroll ?>,
+                        autoplay: <?php echo $responsive_setting->autoplay?'true':'false' ?>,
+                        autoplaySpeed: <?php echo $responsive_setting->autoplaySpeed ?>,
+                        arrows: <?php echo $responsive_setting->arrows?'true':'false' ?>,
+                        fade: <?php echo $responsive_setting->fade?'true':'false' ?>,
+                        cssEase: 'linear',
+                        pauseOnFocus: <?php echo $responsive_setting->pauseOnFocus?'true':'false' ?>,
+                        pauseOnHover: <?php echo $responsive_setting->pauseOnHover?'true':'false' ?>,
+                        pauseOnDotsHover: <?php echo $responsive_setting->pauseOnDotsHover?'true':'false' ?>,
+                    }
+                }
+                <?php endforeach; ?>
+            ]
+            <?php endif; ?>
+        });
+
+        $('.contao-slick').css('display', 'block');
+    });
+</script>
